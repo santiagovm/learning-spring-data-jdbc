@@ -6,8 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class LearningSpringDataJdbcApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void context_loads() { }
 
 }
