@@ -14,6 +14,8 @@ Other modules in the Spring Data family are:
 Spring Data JDBC aims at being conceptually easy. To achieve this, it does NOT offer caching, lazy loading, 
 write behind, or many other features found in other ORMs. This makes Spring Data JDBC a simple, limited, opinionated ORM.
 
+![](images/jdbc-modules.jpg)
+
 ## What is Spring Data?
 
 Spring Data is an umbrella project that covers a collection of data-access projects that share a common programming model. 
@@ -54,6 +56,14 @@ while Spring Data JDBC does not (yet).
 
 ![](images/spring-data-repo-hierarchy.jpg)
 
+## When does it make sense to use Spring Data JDBC?
+
+- You are using Domain Driven Design
+- You have a simple domain model
+- You want some basic object-relational-mapping for CRUD operations 
+without the JPA learning curve or sophisticated features.
+- You want something that plays nice with Spring
+
 ## Spring Data JDBC Demos
 
 ### Demo 1: CRUD Repository
@@ -65,33 +75,7 @@ see test: `should_perform_crud_operations`
 - see test: `should_find_flights_from_london`
 - notice that Spring Data JDBC does not support Derived Queries yet
 
-### Demo 3: Sorting Data
-
-- Spring Data JDBC does not support Spring Data Sort yet. Cannot use `Sort` type in FindAll method 
-or the `PaginationAndSortingRepository` interface.
-- A workaround is to hardcode the `ORDER BY` clause in a `@Query` annotation
-- see test: `should_sort_flights_by_origin`
-
-### Demo 4: Paginating Data
-
-- Spring Data JDBC does not support Spring Data Pagination yet. Cannot use `Pageable` type in FindAll method 
-or the `PaginationAndSortingRepository` interface.
-- A workaround is to hardcode the `LIMIT` and `OFFSET` clauses in a `@Query` annotation
-- see test: `should_page_results`
-
-### Demo 5: Repository Custom Implementation
-
-- Custom repository implementation must be follow the naming convention `FooRepository` -> `FooRepositoryImpl`.
- For example, calling your implementation `DefaultFooRepository` won't work. Spring Data will not find the custom code.
-- see test: `should_use_custom_implementation`
-
-### Demo 6: Transactions
-
-- Transactions are not really part of Spring Data, they belong to Spring Core. 
-However, they are often used with Spring Data.
-- see tests: `TransactionalTests`
-
-### Demo 7: DDD Aggregates
+### Demo 3: DDD Aggregates
 
 - An aggregate is a cluster of objects that form a unit, which should always be consistent.
 - An aggregate should always get persisted (and loaded) together. It has a single object, called the aggregate root, 
@@ -103,12 +87,38 @@ The answer is very simple: Everything you can reach from an aggregate root by fo
 is part of the aggregate.
 - see test: `should_perform_crud_operations_on_aggregate`
 
-### Demo 8: References
+### Demo 4: References
 
 - Use ids instead of direct references to store in database link between aggregates.
 - Spring Data JDBC does not support many-to-one or many-to-many relationships. In order to model these, use IDs. 
 This encourages a clean modularization of the domain model.
 - see test: `should_delete_books_without_deleting_authors`
+
+### Demo 5: Repository Custom Implementation
+
+- Custom repository implementation must be follow the naming convention `FooRepository` -> `FooRepositoryImpl`.
+ For example, calling your implementation `DefaultFooRepository` won't work. Spring Data will not find the custom code.
+- see test: `should_use_custom_implementation`
+
+### Demo 6: Sorting Data
+
+- Spring Data JDBC does not support Spring Data Sort yet. Cannot use `Sort` type in FindAll method 
+or the `PaginationAndSortingRepository` interface.
+- A workaround is to hardcode the `ORDER BY` clause in a `@Query` annotation
+- see test: `should_sort_flights_by_origin`
+
+### Demo 7: Paginating Data
+
+- Spring Data JDBC does not support Spring Data Pagination yet. Cannot use `Pageable` type in FindAll method 
+or the `PaginationAndSortingRepository` interface.
+- A workaround is to hardcode the `LIMIT` and `OFFSET` clauses in a `@Query` annotation
+- see test: `should_page_results`
+
+### Demo 8: Transactions
+
+- Transactions are not really part of Spring Data, they belong to Spring Core. 
+However, they are often used with Spring Data.
+- see tests: `TransactionalTests`
 
 ### Demo 9: Auditing
 
@@ -155,6 +165,7 @@ See DEBUG entries in tests output which are turned on by setting in application.
 
 `logging.level.org.springframework.jdbc.core.JdbcTemplate=DEBUG`
 
+
 ## JDBC-related annotations
 
 ### @EnableJdbcRepositories
@@ -172,6 +183,7 @@ Tests require this annotation to properly configure underlying `JdbcTemplates`.
 Without this annotation one would see an error that looks like this:
 
 `No qualifying bean of type 'org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations' available`
+
 
 ## Reference Material
 
@@ -195,6 +207,7 @@ Without this annotation one would see an error that looks like this:
 
 ### StackOverflow
 
+- [Spring Data JDBC / Spring Data JPA vs Hibernate](https://stackoverflow.com/a/42488593/725987)
 - [Can I do pagination with spring-data-jdbc?](https://stackoverflow.com/questions/55570077/can-i-do-pagination-with-spring-data-jdbc)
 - [PagingAndSortingRepository methods throw error when used with spring data jdbc](https://stackoverflow.com/questions/53088927/pagingandsortingrepository-methods-throw-error-when-used-with-spring-data-jdbc/53089091#53089091)
 

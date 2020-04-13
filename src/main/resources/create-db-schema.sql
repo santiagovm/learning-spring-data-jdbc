@@ -5,8 +5,8 @@ create table if not exists flight (
     scheduled_at        timestamp       not null,
     created_by          varchar(200)    not null,
     created_date        timestamp       not null,
-    last_modified_by    varchar(200)    not null,
-    last_modified_date  timestamp       not null
+    last_modified_by     varchar(200)    not null,
+    last_modified_date   timestamp       not null
 );
 
 create table if not exists purchase_order (
